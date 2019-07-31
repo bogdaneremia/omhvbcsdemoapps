@@ -1,0 +1,15 @@
+<oj-ext-mobile-page-template id="page-template" page-title="Welcome">
+    <oj-bind-if test="{{ $application.variables.authenticated }}">
+      <oj-button slot="startControl" id="drawerToggleButton" on-click="[[$listeners.fireToggleDrawer]]" chroming="half" display="icons">
+          <span slot="startIcon" class="oj-fwk-icon oj-fwk-icon-hamburger"></span>
+          <span><oj-bind-text value="[[ $application.translations.app.toggle_drawer_label ]]"></oj-bind-text></span>
+      </oj-button>
+    </oj-bind-if>
+    <div class="oj-flex-item oj-flex oj-sm-flex-direction-column oj-sm-flex-wrap-nowrap">
+        <oj-form-layout id="oj-form-layout--2074156974-1" class="oj-flex-item">
+            <oj-input-text id="oj-input-text--2074156974-1" label-hint="Username" required="true" value="{{ $application.variables.username }}"></oj-input-text>
+            <oj-input-password id="oj-input-password--2074156974-1" label-hint="Password" required="true" value="{{ $application.variables.password }}"></oj-input-password>
+            <oj-button id="oj-button--2074156974-1" on-oj-action="[[$listeners.ojButton20741569741OjAction]]">Login</oj-button>
+        </oj-form-layout>
+    </div>
+</oj-ext-mobile-page-template>

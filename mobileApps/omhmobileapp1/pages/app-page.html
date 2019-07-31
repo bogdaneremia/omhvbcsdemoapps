@@ -1,0 +1,31 @@
+<div id="oj-ext-mobile-page-wrapper" class="oj-offcanvas-outer-wrapper oj-offcanvas-page">
+    <oj-ext-mobile-navigation-bar-drawer id="mobile-navigation-drawer" on-navigation-action="[[$listeners.navDrawerNavigation]]" selection="[[$page.currentFlow]]">
+        <div slot="header">
+            <oj-avatar role="img" size="md" initials="[[ $page.translations.app.avatar_initials ]]" id="navigation-bar-avatar"
+                       :aria-label="[[ $page.translations.app.avatar_label ]]">
+            </oj-avatar>
+            <h2 style="margin-left: auto; margin-right: auto;"><oj-bind-text value="[[ $application.variables.loggedUserDisplayName ]]"></oj-bind-text></h2>
+        </div>
+
+        <oj-bind-if test="{{ $application.variables.authenticated }}">
+          <oj-ext-mobile-navigation-item name="Login" action="login" iconclass="oj-fwk-icon oj-fwk-icon-list" ></oj-ext-mobile-navigation-item>
+        </oj-bind-if>
+        
+        <oj-ext-mobile-navigation-item name="Page 1" action="page1" iconclass="oj-fwk-icon oj-fwk-icon-list"></oj-ext-mobile-navigation-item>
+        <oj-ext-mobile-navigation-item name="Page 2" action="page2" iconclass="oj-fwk-icon oj-fwk-icon-list"></oj-ext-mobile-navigation-item>
+        <oj-ext-mobile-navigation-item name="Page 3" action="page3" iconclass="oj-fwk-icon oj-fwk-icon-list"></oj-ext-mobile-navigation-item>
+
+        <oj-ext-mobile-navigation-item name="Logout" action="logout" iconclass="oj-fwk-icon oj-fwk-icon-list"></oj-ext-mobile-navigation-item>
+
+        <div slot="footer" class="oj-flex-bar oj-sm-justify-content-center">
+            <h2><oj-bind-text value="[[ $page.translations.app.nav_drawer_application_title ]]"></oj-bind-text></h2>
+        </div>
+    </oj-ext-mobile-navigation-bar-drawer>
+    <div id="page" class="oj-hybrid-applayout-page">
+        <!-- for message notifications -->
+        <oj-messages id="vbDefaultNotifier" position="{}" display="general" messages="{{$page.variables.messagesADP}}" on-oj-close="{{$listeners.onMessageClose}}" />
+
+        <!-- Where Visual Pages will be rendered -->
+        <oj-vb-content id="vbRouterContent" class="vbcs-pages-module" config="[[vbRouterFlow]]"></oj-vb-content>
+    </div>
+</div>

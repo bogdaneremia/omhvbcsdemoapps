@@ -1,0 +1,231 @@
+{
+    "pageModelVersion": "19.1.3",
+    "description": "",
+    "routerFlow": "login",
+    "variables": {
+        "messagesADP": {
+            "type": "vb/ArrayDataProvider",
+            "defaultValue": {
+                "idAttribute": "id",
+                "itemType": "page:messageType"
+            }
+        }
+    },
+    "types": {
+        "messageType": {
+            "id": "string",
+            "severity": "string",
+            "category": "string",
+            "summary": "string",
+            "detail": "string",
+            "timestamp": "string",
+            "autoTimeout": "number"
+        }
+    },
+    "chains": {
+        "showNotification": {
+            "variables": {
+                "eventPayload": {
+                    "type": "page:messageType",
+                    "input": "fromCaller"
+                }
+            },
+            "root": "displayMessage",
+            "actions": {
+                "displayMessage": {
+                    "module": "vb/action/builtin/fireDataProviderEventAction",
+                    "parameters": {
+                        "target": "{{ $page.variables.messagesADP }}",
+                        "add": {
+                            "data": "{{ [ $chain.variables.eventPayload ] }}"
+                        }
+                    }
+                }
+            }
+        },
+        "closeNotificationHandler": {
+            "variables": {
+                "eventMessage": {
+                    "type": "page:messageType",
+                    "input": "fromCaller"
+                }
+            },
+            "root": "removeMessage",
+            "actions": {
+                "removeMessage": {
+                    "module": "vb/action/builtin/fireDataProviderEventAction",
+                    "parameters": {
+                        "target": "{{ $page.variables.messagesADP }}",
+                        "remove": {
+                            "keys": "{{ [ $variables.eventMessage.id ] }}"
+                        }
+                    }
+                }
+            }
+        },
+        "navDrawerNavigationChain": {
+            "variables": {
+                "detail": {
+                    "required": true,
+                    "type": "object",
+                    "input": "fromCaller"
+                }
+            },
+            "root": "switch1",
+            "actions": {
+                "switch1": {
+                    "module": "vb/action/builtin/switchAction",
+                    "outcomes": {
+                        "page1": "navigateToPage0",
+                        "page2": "navigateToPage1",
+                        "page3": "navigateToPage2",
+                        "login": "navigateToPage3",
+                        "logout": "callModuleFunction1"
+                    },
+                    "parameters": {
+                        "caseValue": "{{ $chain.variables.detail.value }}",
+                        "possibleValues": [
+                            "page1",
+                            "page2",
+                            "page3",
+                            "login",
+                            "logout"
+                        ]
+                    }
+                },
+                "navigateToPage0": {
+                    "module": "vb/action/builtin/navigateToPageAction",
+                    "parameters": {
+                        "page": "app/page1"
+                    }
+                },
+                "navigateToPage1": {
+                    "module": "vb/action/builtin/navigateToPageAction",
+                    "parameters": {
+                        "page": "app/page2"
+                    }
+                },
+                "navigateToPage2": {
+                    "module": "vb/action/builtin/navigateToPageAction",
+                    "parameters": {
+                        "page": "app/page3"
+                    }
+                },
+                "navigateToPage3": {
+                    "module": "vb/action/builtin/navigateToPageAction",
+                    "parameters": {
+                        "page": "app/login"
+                    }
+                },
+                "navigateToPage4": {
+                    "module": "vb/action/builtin/navigateToPageAction",
+                    "parameters": {
+                        "page": "app/login"
+                    }
+                },
+                "callModuleFunction1": {
+                    "module": "vb/action/builtin/callModuleFunctionAction",
+                    "parameters": {
+                        "module": "{{$application.functions}}",
+                        "functionName": "logout"
+                    },
+                    "outcomes": {
+                        "success": "resetVariables1"
+                    }
+                },
+                "resetVariables1": {
+                    "module": "vb/action/builtin/resetVariablesAction",
+                    "parameters": {
+                        "variables": [
+                            "$application.variables.authenticated",
+                            "$application.variables.loggedUserDisplayName",
+                            "$application.variables.password",
+                            "$application.variables.username"
+                        ]
+                    },
+                    "outcomes": {
+                        "success": "navigateToPage4"
+                    }
+                }
+            }
+        },
+        "toggleDrawerChain": {
+            "variables": {},
+            "root": "toggleDrawer",
+            "actions": {
+                "toggleDrawer": {
+                    "module": "vb/action/builtin/callComponentMethodAction",
+                    "parameters": {
+                        "component": "{{ $page.components.byId('mobile-navigation-drawer') }}",
+                        "method": "toggle",
+                        "params": []
+                    }
+                }
+            }
+        }
+    },
+    "eventListeners": {
+        "vbNotification": {
+            "chains": [
+                {
+                    "chainId": "showNotification",
+                    "parameters": {
+                        "eventPayload": "{{ { id: $event.key, summary: $event.summary, detail: $event.message, category: $event.type, severity: $event.type, autoTimeout: $event.displayMode === 'transient' ? 0 : -1, timestamp: oj.IntlConverterUtils.dateToLocalIso(new Date()) } }}"
+                    }
+                }
+            ]
+        },
+        "onMessageClose": {
+            "chains": [
+                {
+                    "chainId": "closeNotificationHandler",
+                    "parameters": {
+                        "eventMessage": "{{ $event.detail.message }}"
+                    }
+                }
+            ]
+        },
+        "navDrawerNavigation": {
+            "chains": [
+                {
+                    "chainId": "navDrawerNavigationChain",
+                    "parameters": {
+                        "detail": "{{ $event.detail }}"
+                    }
+                }
+            ]
+        },
+        "toggleDrawer": {
+            "chains": [
+                {
+                    "chainId": "toggleDrawerChain",
+                    "parameters": {}
+                }
+            ]
+        }
+    },
+    "imports": {
+        "components": {
+            "oj-ext-mobile-navigation-bar-drawer": {
+                "path": "vb/components/mobile-navigation-bar-drawer/loader"
+            },
+            "oj-messages": {
+                "path": "ojs/ojmessages"
+            },
+            "oj-menu": {
+                "path": "ojs/ojmenu"
+            },
+            "oj-toolbar": {
+                "path": "ojs/ojtoolbar"
+            },
+            "oj-avatar": {
+                "path": "ojs/ojavatar"
+            }
+        }
+    },
+    "translations": {
+        "app": {
+            "path": "./resources/strings/app/nls/app-strings"
+        }
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "toggle_drawer_label": "Navigation Drawer",
+  "@toggle_drawer_label": {
+    "description": "The label used by assistive technologies for the Navigation Drawer"
+  }
+}
