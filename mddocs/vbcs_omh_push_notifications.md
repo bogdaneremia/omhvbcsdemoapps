@@ -247,5 +247,5 @@ Follow the guide [Steps for configuring a VBCS mobile app with OMH Client SDK][v
         +	You should receive a Push Notification on the device
         +	If you open the push notification, it will open the app and navigate to the Page 2 page; you can customize the payload in Postman and change the page id; The redirect is dynamic, based on the Push Notification custom json payload.
 
-[postman.js]: /vbcs_omh_push_notifications/src/postman.js
-[vbcs_omh_sdk]: /vbcs_omh_sdk.md
+[postman.js]: vbcs_omh_push_notifications/src/postman.js
+[vbcs_omh_sdk]: vbcs_omh_sdk.md

@@ -162,4 +162,4 @@ Use __OracleMobileHubDemoApps -> omhmobileapp1__ VBCS Mobile App as a reference.
 
 -	Download the app, install it, enable Internet Connection and test it!
 
-[profile.png]: /vbcs_omh_sdk/src/profile.png
+[profile.png]: vbcs_omh_sdk/src/profile.png

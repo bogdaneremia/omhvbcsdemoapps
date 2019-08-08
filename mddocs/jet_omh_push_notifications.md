@@ -280,7 +280,7 @@ Reference Links: [OMH Cordova Applications](https://docs.oracle.com/en/cloud/paa
         +	You should receive a Push Notification on the device
         +	If you open the push notification, it will open the app and navigate to the Customers page; you can customize the payload in Postman and change the page id; The redirect fully dynamic and based on the Push Notification custom json payload.
 
-[dashboard.html]: /jet_omh_push_notifications/src/dashboard.html
-[dashboard.js]: /jet_omh_push_notifications/src/dashboard.js
-[mbe.js]: /jet_omh_push_notifications/src/mbe.js
-[postman.js]: /jet_omh_push_notifications/src/postman.js
+[dashboard.html]: jet_omh_push_notifications/src/dashboard.html
+[dashboard.js]: jet_omh_push_notifications/src/dashboard.js
+[mbe.js]: jet_omh_push_notifications/src/mbe.js
+[postman.js]: jet_omh_push_notifications/src/postman.js
