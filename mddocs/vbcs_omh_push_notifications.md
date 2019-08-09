@@ -1,5 +1,5 @@
 # Steps for configuring a VBCS mobile app with OMH Client to support Push Notifications (Android)
-This tutorial shows you how to create an Oracle VBCS Mobile application and configure it with Oracle Mobile Hub Client to support Push Notifications (Android build).
+This tutorial shows you how to create an **Oracle Visual Builder** Mobile application and configure it with **Oracle Mobile Hub** Client to support Push Notifications (Android build).
 
 ## Introduction
 
@@ -58,6 +58,7 @@ mobile phone number, recovery email not mandatory
     *	Enable Developer Options on the device
     *	Install USB drivers if using a Windows Machine: https://developer.android.com/studio/run/oem-usb.html
 -	Configure required environment variables:
+    
     *	JAVA_HOME (Java JDK install, ex. value: C:\Programs\Oracle\Java\jdk1.8.0_201\)
 -	[Optional] Configure required environment variables for Android Studio
     *	ANDROID_HOME (Android SDK install, ex. value: C:\Programs\Google\Android\SDK)
@@ -73,17 +74,17 @@ mobile phone number, recovery email not mandatory
         	```
         +	The order is important, Android\SDK\emulator must be loaded first, otherwise problems might occur when launching the Android emulator
 -	Download OMH Cordova Client SDK
-    *	Safest way: go to OMH Instance Console > Development Menu > Downloads
+    *	Safest way: go to *OMH Instance Console* > *Development* Menu > *Downloads*
     *	Accept License Agreement
-    *	Download latest __Cordova SDK__ from OMC / AMCE SDKS section (for example amce-cordova-sdk-v18.3.3.0.zip)
-    *	Unpack the .zip in a working root folder, under a parent folder with the same name as the .zip file
+    *	Download latest __Cordova SDK__ from *OMC / AMCE SDKS* section (for example amce-cordova-sdk-v18.3.3.0.zip)
+    *	Unpack the .zip file contents in a parent folder with the same name as the .zip file
     *	Folder structure should be:
         ```sh
 		amce-cordova-sdk-v18.3.3.0\oracle-mcs-notifications-cordova-plugin
 		amce-cordova-sdk-v18.3.3.0\types
 		amce-cordova-sdk-v18.3.3.0\mcs.js
 		amce-cordova-sdk-v18.3.3.0\package.json
-		…
+		amce-cordova-sdk-v18.3.3.0\…
         ```
     *	To fix some future build errors, change the following line in the amce-cordova-sdk-v18.3.3.0\oracle-mcs-notifications-cordova-plugin\scripts\android-before-build.js file:
 		```sh        
@@ -93,7 +94,7 @@ mobile phone number, recovery email not mandatory
 		```sh
 		const ANDROID_PLATFORM_SRC_PATH = 'platforms/android/app/src/main/java';
 		```
-    *	To force to an old version for Firebase dependency (at the time of writing this, latest oracle-mcs-notifications-cordova-plugin wasn’t compatible with the latest __firebase-core__ and __firebase-messaging__ packages) change the following lines in the \amce-cordova-sdk-v18.3.3.0\oracle-mcs-notifications-cordova-plugin\plugin.xml file:
+    *	To force to an old version as Firebase dependency (at the time of writing this tutorial, latest **oracle-mcs-notifications-cordova-plugin** wasn’t compatible with the latest __firebase-core__ and __firebase-messaging__ packages) change the following lines in the \amce-cordova-sdk-v18.3.3.0\oracle-mcs-notifications-cordova-plugin\plugin.xml file:
         ```
 		<framework src="com.google.firebase:firebase-core:+" />
 		<framework src="com.google.firebase:firebase-messaging:+" />
@@ -107,16 +108,17 @@ mobile phone number, recovery email not mandatory
 ## App development
 
 Use __OracleMobileHubDemoApps -> omhmobileapp2__ VBCS Mobile App as a reference.
-Follow the guide [Steps for configuring a VBCS mobile app with OMH Client SDK][vbcs_omh_sdk]. You may add to your app only the login/logout functionality; you can skip getting profile details from OMH. This guide will focus only on enabling Push Notifications.
+
+Follow the guide [Steps for configuring a VBCS mobile app with OMH Client SDK][vbcs_omh_sdk]. You may add to your app only the login/logout functionality; you can skip getting profile details from OMH. This guide will focus only on configuring Push Notifications.
 
 ### 1st step: add OMH JavaScript SDK in the VBCS Mobile App project
 
--	Follow 1st step of [Steps for configuring a VBCS mobile app with OMH Client SDK][vbcs_omh_sdk] guide
+-	Follow 1st step from [Steps for configuring a VBCS mobile app with OMH Client SDK][vbcs_omh_sdk] guide
 
 ### 2nd step: add an OMH Mobile Backend JS configuration file
--	Follow 2nd step of [Steps for configuring a VBCS mobile app with OMH Client SDK][vbcs_omh_sdk] guide
+-	Follow 2nd step from[Steps for configuring a VBCS mobile app with OMH Client SDK][vbcs_omh_sdk] guide
 
--	Use __omhmobileapp2__ VBCS Mobile App as a reference for the mbe.js code as it adds required functions for handling device registration and receiving push notifications data
+-	Use __omhmobileapp2__ VBCS Mobile App as a reference for the mbe.js code as it adds new functions for handling device registration and receiving push notifications data
 
 -	Check the mobileApps/omhmobileapp2/flows/login/pages/login-start-page.js Page Module to see an example on how to use the mbe.js file; we register the app for push notifications only if the login has been successful
 
@@ -125,19 +127,19 @@ Follow the guide [Steps for configuring a VBCS mobile app with OMH Client SDK][v
 ### 3rd step:  Prepare VBCS Mobile App build template
 
 -	Setup an applicationID / Bundle ID:
-    *	Go to the VBCS Mobile App settings > General Setting tab
+    *	Go to the VBCS Mobile App *Settings* > *General Setting* tab
     *	Setup an Android applicationID for the Package Name / Bundle ID Default
         +	Example format: __com.oraclecorp.internal.ent1.omhvbcstest__
         +	(Please use a different ID, not the above one of the reference application)
     *	Make sure to update the _handleTokenRefresh_ function in mbe.js with the same value for _packageName_ variable
 
 -	Download project build template and prepare the app for Android
-    *	Go to the VBCS Mobile App settings > Custom Plugins tab
+    *	Go to the VBCS Mobile App *Settings* > *Custom Plugins* tab
     *	_Download Cordova Project Source_
     *	Extract the .zip content in a folder – cordova-package, for example -, preferable alongside the OMH SDK folder (amce-cordova-sdk-v18.3.3.0 in my case); 
     *	Edit the config.xml file under the cordova-package folder:
-        +	Replace the default applicationID in the root widget tag with the value setup earlier
-        +	Do the same for the applicationID preference under the platform tag
+        +	Replace the default applicationID in the root *widget* tag with the value setup earlier
+        +	Do the same for the applicationID preference under the *platform* tag
         +	There are two occurrences in total; This is important as the OMH Push Notifications Cordova Plugin won’t install if the template project and the google-services.json file (that we’ll be adding later) are not using the same applicationID
 
 -	Add the Android Platform
@@ -155,17 +157,17 @@ Follow the guide [Steps for configuring a VBCS mobile app with OMH Client SDK][v
 
 -	Create a project in Google Firebase
     *	Go to Google Firebase and create a new project:
-        +	ProjectName: any name as you wish
-        +	Location: select suitable values
-    *	Go to Project Settings:
+        +	*ProjectName*: any name as you wish
+        +	*Location*: select suitable values
+    *	Go to *Project Settings*:
         +	Select a Support email address
     *	In _Your Apps_ section add a new Android App:
-        +	Android Package Name: the applicationID value that we setup earlier
+        +	*Android Package Name*: the applicationID value that we setup earlier
         +	Register App
         +	Download google-services.json file
-        +	Save that inside the cordova-package folder
-        +	Place another copy of the filer in the \[cordova-package folder\]\platforms\android\app folder
-        +	Next (ignore gradle steps, those will be handled by the OMH Push Notifications Cordova Plugin)
+        +	Save that under the cordova-package folder
+        +	Place another copy of the filer under \[cordova-package folder\]\platforms\android\app folder
+        +	*Next* (ignore gradle steps, those will be handled by the OMH Push Notifications Cordova Plugin)
         +	Skip _Checking Communication with servers_ step
 
 -	Add OMH Push Notifications Cordova plugin
@@ -188,57 +190,57 @@ Follow the guide [Steps for configuring a VBCS mobile app with OMH Client SDK][v
         ```
 
 -	Configure OMH for Push Notifications
-    *	Go to OMH Instance Console > Development > Backends > \[your mobile backend\]
-    *	Go to Clients Tab and add a new Client:
-        +	Set a Client Name / Display Name
-        +	Platform: Android
-        +	Package name: the applicationID value that we have setup earlier
-        +	Mobile App Version: appVersion value that we have setup earlier (1.0.0)
-        +	Create
-    *	Switch to Profiles tab in the newly created Client and Create a new Profile:
-        +	Set a profile Name
-        +	Notification Service: Firebase Cloud Messaging (FCM)
-        +	Send Method: HTTP
-        +	API Key: You get this value from the Google Firebase Console > \[Your project\] > Settings > Cloud Messaging Tab > Project Credentials section > Server Key (it has to be a long string)
-        +	Sender ID: You get this value from the same section as above, Sender ID field value
-        +	Create
+    *	Go to OMH Instance Console > *Development* > *Backends* > \[your mobile backend\]
+    *	Go to *Clients* Tab and add a new Client:
+        +	Set a *Client Name* / *Display Name*
+        +	*Platform*: Android
+        +	*Package name*: the applicationID value that we have setup earlier
+        +	*Mobile App Version*: appVersion value that we have setup earlier (1.0.0)
+        +	*Create*
+    *	Switch to *Profiles* tab in the newly created Client and Create a new Profile:
+        +	Set a profile *Name*
+        +	*Notification Service*: Firebase Cloud Messaging (FCM)
+        +	*Send Method*: HTTP
+        +	*API Key*: You get this value from the Google Firebase Console > \[Your project\] > *Settings* > *Cloud Messaging* Tab > *Project Credentials* section > *Server Key* (it should be a long string)
+        +	*Sender ID*: You get this value from the same section as above, Sender ID field value
+        +	*Create*
     *	Now, OMH should be able to contact Google Firebase in order to send push notifications to your app
 
 ### 5th step: Stage the Mobile app and run it on device
 
 
--	Open Setting for your VBCS Mobile App (in case of the reference app, OracleMobileHubDemoApps -> omhmobileapp2)
+-	Open *Setting* for your VBCS Mobile App (in case of the reference app, OracleMobileHubDemoApps -> omhmobileapp2)
 
--	Allow anonymous access in the Security Tab; as we’ll authenticate directly using the OMH SDK client, we don’t need out of the box VBCS authentication mechanism; If both VBCS and OMH are in the same tenancy, the same IDCS User Identity Store we’ll be used, but our custom login page will replace the browser based IDCS authentication
+-	*Allow anonymous access* in the *Security* Tab; as we’ll authenticate directly using the OMH SDK client, we don’t need out of the box VBCS authentication mechanism; If both VBCS and OMH are in the same tenancy, the same IDCS User Identity Store we’ll be used, but our custom login page will replace the browser based IDCS authentication
 
 -	Add New Configuration for Android in Build Configurations tab:
-    *	Select Build Type: Debug
+    *	Select *Build Type*: Debug
     *	Leave the other fields as default
     *	Upload the keystore
     *	Fill values for keystore password, key alias and key password
 
--	In Custom Plugins tab, upload the .apk file generated earlier:
-    *	Select Upload > Android
-    *	Give a Template Name
+-	In *Custom Plugins* tab, upload the .apk file generated earlier:
+    *	Select *Upload* > *Android*
+    *	Give a *Template Name*
     *	Select _Debug_
     *	Upload the .apk file
 
 -	Install and run the Mobile App:
     *	Run the application in Development mode (in Browser); don’t login yet – the plugin will not work in Web Browser
-    *	Use the Stage button to Stage the app and to generate a QR code for downloading the app
+    *	Use the *Stage* button to Stage the app and to generate a QR code for downloading the app
     *	Download the app, install it, enable Internet Connection
 
 -	Test the Application
     *	First, Login on the Dashboard page
     *	Check Device registration in OHM Instance Console
-        +	Go to Development > \[your mobile backend\] > Notifications > Manage Devices
-        +	A new device should have appeared here; if not check the Request history and look for error messages
+        +	Go to *Development* > \[your mobile backend\] > *Notifications* > *Manage Devices*
+        +	A new device should have appeared here; if not, check the *Request history* and look for error messages
         +	Option to debug: Use Chrome to inspect JS console of the mobile app
-    *	Use Postman to invoke OMH Push Notifications Service that will send a push notification to the app through Google Firebase
-        +	HTTP Method: POST
-        +	Endpoint: \[mobile backend base url\]/mobile/system/notifications/notifications/
-        +	Authentication: Basic; use your OHM user credentials
-        +	Headers:
+    *	Use Postman to invoke OMH Push Notifications APIs that will send a push notification to the app through Google Firebase
+        +	*HTTP Method*: POST
+        +	*Endpoint*: \[mobile backend base url\]/mobile/system/notifications/notifications/
+        +	*Authentication*: Basic; use your OHM user credentials
+        +	*Headers*:
         >		Content-Type: application/json
         >		oracle-mobile-backend-id: [your mobile backend id value]
         +	Body: Use the content of the [postman.js] example file
