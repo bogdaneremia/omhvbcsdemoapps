@@ -16,15 +16,15 @@ There are two mobile apps that you can use as a reference when integrating OMH i
 
 ## Tutorials
 
-[Steps for configuring a VBCS Mobile App with OMH Client SDK][vbcs_omh_sdk] - This tutorial shows you how to create an Oracle VBCS Mobile application and configure it with Oracle Mobile Hub Client SDK
+[Steps for configuring a VBCS Mobile App with OMH Client SDK][vbcs_omh_sdk] - This tutorial shows you how to create an **Oracle Visual Builder** Mobile application and configure it with **Oracle Mobile Hub** Client SDK
 
-[Steps for configuring a VBCS mobile app with OMH Client to support Push Notifications (Android)][vbcs_omh_push_notifications] - This tutorial shows you how to create an Oracle VBCS Mobile application and configure it with Oracle Mobile Hub Client to support Push Notifications (Android build)
+[Steps for configuring a VBCS mobile app with OMH Client to support Push Notifications (Android)][vbcs_omh_push_notifications] - This tutorial shows you how to create an **Oracle Visual Builder** Mobile application and configure it with **Oracle Mobile Hub** Client to support Push Notifications (Android build)
 
 
 
-If interested using plain **Oracle JET** instead of Visual Builder, you may find useful:
+If interested in using plain **Oracle JET** instead of Visual Builder, you may find useful:
 
-[Steps for configuring a JET mobile app with OMH Client to support Push Notifications (Android)][jet_omh_push_notifications] - This tutorial shows you how to create an Oracle JET Mobile application and configure it with Oracle Mobile Hub Client to support Push Notifications (Android build)
+[Steps for configuring a JET mobile app with OMH Client to support Push Notifications (Android)][jet_omh_push_notifications] - This tutorial shows you how to create an **Oracle JET** Mobile application and configure it with **Oracle Mobile Hub** Client to support Push Notifications (Android build)
 
 
 
